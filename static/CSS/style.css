@@ -192,7 +192,7 @@ body{
     border: none;
     border-radius: 30px;
     background-color: #61b484;
-    width: 39%;
+    /*width: 39%;*/
     height: 10px;
 }
 .progress{
@@ -212,4 +212,10 @@ footer{
 footer>p{
     padding: 5px;
 
+}
+
+.accountForm{
+    width: 60%;
+    transform: translateX(45%);
+    margin-top: 10%;
 }

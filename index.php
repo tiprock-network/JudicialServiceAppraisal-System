@@ -1,5 +1,22 @@
 <!--Header Code-->
 <?php include 'inc/header.php'?>
+<?php 
+   require('config/db.php');
+
+   $query= 'SELECT * FROM CaseTbl';
+
+   //fetch the result
+   $res=mysqli_query($conn,$query);
+
+   //fetching all with an associative array
+   $cases=mysqli_fetch_all($res,MYSQLI_ASSOC); 
+   
+   //free result
+   mysqli_free_result($res);
+
+   //close the connection
+   mysqli_close($conn);
+?>
 <!--Header Code Ends Here-->
 
 <!--Body Code Starts Here-->
@@ -35,16 +52,23 @@
 </div>
 
 <!--Content list of Cases-->
-
+<?php foreach($cases as $case):?>
     <div class="casebox">
-        <div class="caseHead"><p>ID: C/LAW/DD468 Delton Spectron River Diti Case</p></div>
-        <div class="caseDesc">Delton Spectron Case on oil spil and river claims around Diti Area. Major sessions are almost being completed.</div>
+        <div class="caseHead">
+        <p>
+        ID: <?php echo $case['CaseId']; ?> 
+        <?php echo $case['CaseName']; ?>
+        </p>
+    </div>
+        <div class="caseDesc">
+        <?php echo $case['CaseDesc']; ?>
+        </div>
         <div class="caseProgress">
-            <div class="progressbarBox"><div class="progressbar"><div class="bar"></div></div></div>
-            <div class="progress">39 % Progress</div>
+            <div class="progressbarBox"><div class="progressbar"><div class="bar" style="width: <?php echo round((($case['No_of_hearings']/$case['No_of_complete_hearings'])*100),0);?>%"></div></div></div>
+            <div class="progress"><?php echo round((($case['No_of_hearings']/$case['No_of_complete_hearings'])*100),0); ?> % Progress</div>
         </div>
     </div>
-
+<?php endforeach ?>
 </div>
 
 
