@@ -24,10 +24,32 @@
     <nav>
         
         <ul id="navItems">
-            <li class="listItem active"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-            <li  class="listItem"><a href="#"><i class="fa fa-envelope-open-text"></i> Services</a></li>
+            <li class="listItem active"><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
+            <li  class="listItem"><a href="services.php"><i class="fa fa-envelope-open-text"></i> Services</a></li>
             <li  class="listItem"><a href="#"><i class="fa fa-download"></i> Downloads</a></li>
             <li  class="listItem"><a href="#"><i class="fa fa-headset"></i> Contact Us</a></li>
+            <li  class="listItem"><a href="login.php">
+            <?php
+                if (!isset($_SESSION['UserRole'])) {
+                    echo '<i class="fa fa-user-plus"></i>';
+                } else {
+                    echo '<i class="fa fa-user-check"></i>' . $_SESSION['UserRole'];
+                    if (isset($_SESSION['start']) && isset($_SESSION['expire'])) {
+                        $current_time = time();
+                        if ($current_time > $_SESSION['expire']) {
+                            session_unset();
+                            session_destroy();
+                            //redirects our page to home page
+                            echo "<script>
+                            setTimeout(function () {
+                                window.location.href= './index.php';
+                            }, 3000); // 3 seconds
+                            </script>";
+                        }
+                    }
+                }
+            ?>
+            </a></li>
         </ul>
     </nav>
     </div>

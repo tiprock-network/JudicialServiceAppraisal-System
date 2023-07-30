@@ -215,7 +215,193 @@ footer>p{
 }
 
 .accountForm{
-    width: 60%;
+    width: 50%;
     transform: translateX(45%);
-    margin-top: 10%;
+    margin-top: 4%;
+    margin-bottom: 10%;
+    box-shadow: 0px 2px 4px 0px #ccc;
+    padding: 10px 20px;
+    animation: appear;
+    animation-duration: 1s;
+    animation-timing-function: linear;
 }
+@keyframes appear{
+    0%{
+      margin-left: -100%;
+      opacity: 0;
+    }
+    50%{
+        margin-left: -50%;
+        opacity: 0.2;
+      }
+    100%{
+        margin-left: 0;
+        opacity: 1;
+    }
+}
+
+.input-section{
+    margin: 20px;
+}
+.input-section>label{
+    font-size: 18px;
+}
+.input-section>input{
+    margin-top: 20px;
+    width: 50%;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    background: #EEE;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    color: #333;
+}
+.input-section>button{
+    border-radius: 25px;
+    padding: 10px 20px;
+    border: none;
+    background: burlywood;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 50%;
+    transform: translateX(40%);
+    margin-top: 30px;
+}
+.input-section>button:hover{
+    background: rgb(211, 171, 119);
+}
+
+.infoBox{
+    position: absolute;
+    width: 300px;
+    transform: translate(380px,-280px);
+    color: #333;
+}
+.infoBox>a{
+    text-decoration: none;
+    color: #727272;
+    font-weight: 600;
+}
+input[type=radio]{
+    width: 100%;
+}
+.correct{
+    width: 45%;
+    font-size: 22px;
+    font-family: 'Montserrat', sans-serif;
+    padding: 10px 20px;
+    margin-top: 4%;
+    margin-bottom: 2%;
+    border:1px solid  #61b484;
+    color: #378658;
+    font-weight: 600;
+    transform: translateX(55%);
+}
+
+.wrong{
+    width: 45%;
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+    padding: 10px 20px;
+    margin-top: 4%;
+    margin-bottom: 2%;
+    border:1px solid  #e93333;
+    color: #b32626;
+    font-weight: 600;
+    transform: translateX(55%);
+}
+
+.wrong>p,.correct>p{
+    margin: 30px;
+    padding: 10px 20px;
+}
+
+.greenText{
+    display: none;
+    font-family: 'Montserrat Alternates', sans-serif;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color:#333;
+}
+
+.redP{
+    display: none;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.cards-box{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+    margin-top: 2%;
+    color: #727272;
+    
+}
+
+a{
+    text-decoration: none;
+}
+
+.cards-box>a .card>{
+    border: none;
+    height: 200px; 
+    
+}
+.cards-box>a .card>{
+   text-decoration: none;
+    
+}
+
+.cards-box>a .card>img{
+    
+    height: 140px;
+    width: 100%; 
+    object-fit: cover;
+    filter: brightness(60%);
+    z-index: -1;
+}
+.cards-box>a .card> img:hover{
+    filter: brightness(100%);
+    cursor: pointer;
+}
+.cards-box>a .card> .head{
+    border: 1px solid #ccc;
+    font-size: 25px;
+    text-align: center;
+    padding: 10px;
+    color: burlywood;
+    font-weight: 900;
+    text-decoration: none;
+    
+}
+
+.form-table{
+    padding: 15px;
+
+}
+.form-table> th,.form-table,td{
+    
+    
+    padding: 20px;
+    font-size: 16px;
+    color: #727272;
+}
+
+td input[type="radio"] {
+    margin-right: 5px;
+    /* Increase the size of the radio button */
+    transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+}
+
+

@@ -1,18 +1,67 @@
 <!--Header Code-->
-<?php include 'inc/header.php'?>
 <?php 
+//Session for all pages
+    
+session_start();
+//error_reporting(0);
+//
+include 'inc/header.php'
+?>
+<?php 
+
+   require('config/config.php');
    require('config/db.php');
+   /*error_reporting(0);*/
+   // Initialize the variables
+    $plaint_id = null;
+    $lawyer_id = null;
+    $judge_id = null;
 
-   $query= 'SELECT * FROM CaseTbl';
+    if (isset($_SESSION['PlaintId'])) {
+        $plaint_id = $_SESSION['PlaintId'];
+    }
 
+    if (isset($_SESSION['LawyerId'])) {
+        $lawyer_id = $_SESSION['LawyerId'];
+    }
+
+    if (isset($_SESSION['JudgeId'])) {
+        $judge_id = $_SESSION['JudgeId'];
+    }
+  
+   //echo $_SESSION['PlaintName'];
+   //queries to get data
+   $query_plaint= "SELECT * FROM CaseTbl WHERE PlaintId='$plaint_id'; ";
+   $query_lawyer= "SELECT * FROM CaseTbl WHERE LawyerId='$lawyer_id'; ";
+   $query_judge= "SELECT * FROM CaseTbl WHERE JudgeId='$judge_id'; ";
+
+   //get all plaintiff user data
    //fetch the result
-   $res=mysqli_query($conn,$query);
+   $res_plaint=mysqli_query($conn,$query_plaint);
 
    //fetching all with an associative array
-   $cases=mysqli_fetch_all($res,MYSQLI_ASSOC); 
+   $cases_plaint=mysqli_fetch_all($res_plaint,MYSQLI_ASSOC); 
    
-   //free result
-   mysqli_free_result($res);
+  
+
+   //get all lawyer user data
+   //fetch the result
+   $res_lawyer=mysqli_query($conn,$query_lawyer);
+
+   //fetching all with an associative array
+   $cases_lawyer=mysqli_fetch_all($res_lawyer,MYSQLI_ASSOC); 
+   
+   
+
+
+   //get all judge user data
+   //fetch the result
+   $res_judge=mysqli_query($conn,$query_judge);
+
+   //fetching all with an associative array
+   $cases=mysqli_fetch_all($res_judge,MYSQLI_ASSOC); 
+   
+   
 
    //close the connection
    mysqli_close($conn);
@@ -31,10 +80,10 @@
 <div class="mainContainer">
     <div class="details">
         <div class="mainContent">
-         <p>This open portal allows you to choose a range of services based on your ajenda. Please explore the appropriate categories as given as per your court customer. For extra help contact the support staff.</p>
+         <p>This open portal allows you to choose a range of services based on your agenda. Please explore the appropriate categories as given as per your court customer. For extra help contact the support staff.</p>
         </div>
         <div class="buttonBox">
-          <a href=""><button>Create an account here</button></a>
+          <a href="signup.php"><button>Create an account here</button></a>
         </div>
     </div>
 
@@ -52,23 +101,77 @@
 </div>
 
 <!--Content list of Cases-->
-<?php foreach($cases as $case):?>
-    <div class="casebox">
-        <div class="caseHead">
-        <p>
-        ID: <?php echo $case['CaseId']; ?> 
-        <?php echo $case['CaseName']; ?>
-        </p>
-    </div>
-        <div class="caseDesc">
-        <?php echo $case['CaseDesc']; ?>
+<?php 
+if (mysqli_num_rows($res_plaint) > 0) {
+    foreach ($cases_plaint as $case) :
+        ?>
+        <div class="casebox">
+            <div class="caseHead">
+                <p>
+                    ID: <?php echo $case['CaseId']; ?> 
+                    <?php echo $case['CaseName']; ?>
+                </p>
+                <sup><?php echo $case['LawyerId']?></sup>
+            </div>
+            <div class="caseDesc">
+                <?php echo $case['CaseDesc']; ?>
+            </div>
+            <div class="caseProgress">
+                <div class="progressbarBox"><div class="progressbar"><div class="bar" style="width: <?php echo round((($case['No_of_hearings']/$case['No_of_complete_hearings'])*100),0);?>%"></div></div></div>
+                <div class="progress"><?php echo round((($case['No_of_hearings']/$case['No_of_complete_hearings'])*100),0); ?> % Progress</div>
+            </div>
         </div>
-        <div class="caseProgress">
-            <div class="progressbarBox"><div class="progressbar"><div class="bar" style="width: <?php echo round((($case['No_of_hearings']/$case['No_of_complete_hearings'])*100),0);?>%"></div></div></div>
-            <div class="progress"><?php echo round((($case['No_of_hearings']/$case['No_of_complete_hearings'])*100),0); ?> % Progress</div>
+    <?php
+    endforeach;
+} else if (mysqli_num_rows($res_lawyer) > 0) {
+    foreach ($cases_lawyer as $case) :
+        ?>
+        <div class="casebox">
+            <div class="caseHead">
+                <p>
+                    ID: <?php echo $case['CaseId']; ?> 
+                    <?php echo $case['CaseName']; ?>
+                </p>
+                <sup><?php echo $case['LawyerId']?></sup>
+            </div>
+            <div class="caseDesc">
+                <?php echo $case['CaseDesc']; ?>
+            </div>
+            <div class="caseProgress">
+                <div class="progressbarBox"><div class="progressbar"><div class="bar" style="width: <?php echo round((($case['No_of_hearings']/$case['No_of_complete_hearings'])*100),0);?>%"></div></div></div>
+                <div class="progress"><?php echo round((($case['No_of_hearings']/$case['No_of_complete_hearings'])*100),0); ?> % Progress</div>
+            </div>
         </div>
-    </div>
-<?php endforeach ?>
+    <?php
+    endforeach;
+} else if (mysqli_num_rows($res_judge) > 0) {
+    foreach ($cases as $case) :
+        ?>
+        <div class="casebox">
+            <div class="caseHead">
+                <p>
+                    ID: <?php echo $case['CaseId']; ?> 
+                    <?php echo $case['CaseName']; ?>
+                </p>
+                <sup><?php echo $case['LawyerId']?></sup>
+            </div>
+            <div class="caseDesc">
+                <?php echo $case['CaseDesc']; ?>
+            </div>
+            <div class="caseProgress">
+                <div class="progressbarBox"><div class="progressbar"><div class="bar" style="width: <?php echo round((($case['No_of_hearings']/$case['No_of_complete_hearings'])*100),0);?>%"></div></div></div>
+                <div class="progress"><?php echo round((($case['No_of_hearings']/$case['No_of_complete_hearings'])*100),0); ?> % Progress</div>
+            </div>
+        </div>
+    <?php
+    endforeach;
+} else {
+    echo "No cases available.";
+}
+?>
+
+<!--Content list end-->
+
 </div>
 
 
