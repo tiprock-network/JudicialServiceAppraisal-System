@@ -33,7 +33,19 @@
                 if (!isset($_SESSION['UserRole'])) {
                     echo '<i class="fa fa-user-plus"></i>';
                 } else {
-                    echo '<i class="fa fa-user-check"></i>' . $_SESSION['UserRole'];
+                    echo '<a href="#">';
+
+                    if (isset($_SESSION['LawyerId'])) {
+                        echo '<i class="fa fa-user-check"></i>' . $_SESSION['UserRole'] . '</a> ';
+                        echo '<a href="profile.php?id=' . $_SESSION['LawyerId'] . '" style="color:#333; margin-left: 15px;">Profile</a>';
+                    } else if (isset($_SESSION['JudgeId'])) {
+                        echo '<i class="fa fa-user-check"></i>' . $_SESSION['UserRole'] . '</a> ';
+                        echo '<a href="profile.php?id=' . $_SESSION['JudgeId'] . '" style="color:#333; margin-left: 15px;">Profile</a>';
+                    } else if (isset($_SESSION['PlaintId'])) {
+                        echo '<i class="fa fa-user-check"></i>' . $_SESSION['UserRole'] . '</a> ';
+                        echo '<a href="profile.php?id=' . $_SESSION['PlaintId'] . '" style="color:#333; margin-left: 15px;">Profile</a>';
+                    }
+
                     if (isset($_SESSION['start']) && isset($_SESSION['expire'])) {
                         $current_time = time();
                         if ($current_time > $_SESSION['expire']) {

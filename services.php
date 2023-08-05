@@ -14,15 +14,15 @@ require('config/db.php');
     <div class="cards-box">
         <a href="appraisal.php">
         <div class="card">
-            <img src="./static/pictures/judge.jpg" alt="">
-            <div class="head"><p>Lawyer Appraisal</p></div>
+            <img src="./static/pictures/lawyer.jpg" alt="">
+            <div class="head"><p>Judge Appraisal</p></div>
         </div>
         </a>
 
-        <a href="appraisal judge.php">
+        <a href="appraisal-lawyer.php">
         <div class="card">
-            <img src="./static/pictures/lawyer.jpg" alt="">
-            <div class="head"><p>Judge Appraisal</p></div>
+            <img src="./static/pictures/judge.jpg" alt="">
+            <div class="head"><p>Lawyer Appraisal</p></div>
         </div>
         </a>
         

@@ -91,6 +91,7 @@ include 'inc/header.php'
     <br>
     <br>
     <div class="navbar" id="navbarholder">
+        <br>
     <ul>
         <li class="navitem active2">Land</li>
         <li class="navitem">Kadhis</li>

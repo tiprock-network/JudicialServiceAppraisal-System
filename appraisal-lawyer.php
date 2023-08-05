@@ -5,40 +5,40 @@
     /*error_reporting(0);*/
 
     //get the names of all the judges
-    $judge_query="SELECT * FROM JudgeTbl;";
-    $res_judges=mysqli_query($conn,$judge_query);
+    $law_query="SELECT * FROM LawyerTbl;";
+    $res_lawyers=mysqli_query($conn,$law_query);
 
     //update the judges table
     if(isset($_POST['submit'])){
-        $judge_id=$_POST['jname'];
+        $law_id=$_POST['jname'];
         //fields
-        $judge_timeliness_rate=$_POST['timeliness'];
-        $judge_serious_rate=$_POST['serious'];
-        $judge_integrity_rate=$_POST['integrity'];
-        $judge_respect_rate=$_POST['respect'];
-        $judge_administration_rate=$_POST['administration'];
+        $law_timeliness_rate=$_POST['timeliness'];
+        $law_serious_rate=$_POST['serious'];
+        $law_integrity_rate=$_POST['integrity'];
+        $law_respect_rate=$_POST['respect'];
+        $law_administration_rate=$_POST['administration'];
 
         //get the score and the performance
-        $row=mysqli_fetch_assoc($res_judges);
+        $row=mysqli_fetch_assoc($res_lawyers);
         $checks=$row['checks']+1;
         $score=$row['Score'];
         //number of questions
         $no_questions=5;
         //find the average performance on a scale of 1-5
-        $performance=(($judge_timeliness_rate+$judge_serious_rate+$judge_integrity_rate+$judge_respect_rate+$judge_administration_rate)/$no_questions)+$score;
+        $performance=(($law_timeliness_rate+$law_serious_rate+$law_integrity_rate+$law_respect_rate+$law_administration_rate)/$no_questions)+$score;
         //new appraisal performance
-        $judge_performance=($performance)/($checks);
+        $law_performance=($performance)/($checks);
 
         //added values
         //fields
-        $judge_timeliness_rate=($_POST['timeliness']+$row['timeliness'])/$checks;
-        $judge_serious_rate=($_POST['serious']+$row['serious'])/$checks;
-        $judge_integrity_rate=($_POST['integrity']+$row['integrity'])/$checks;
-        $judge_respect_rate=($_POST['respect']+$row['respect'])/$checks;
-        $judge_administration_rate=($_POST['administration']+$row['administration'])/$checks;
+        $law_timeliness_rate=($_POST['timeliness']+$row['timeliness'])/$checks;
+        $law_serious_rate=($_POST['serious']+$row['serious'])/$checks;
+        $law_integrity_rate=($_POST['integrity']+$row['integrity'])/$checks;
+        $law_respect_rate=($_POST['respect']+$row['respect'])/$checks;
+        $law_administration_rate=($_POST['administration']+$row['administration'])/$checks;
 
         //create query for update
-        $sql_update="UPDATE JudgeTbl SET Score= '$performance', checks='$checks', AppraisalPerf='$judge_performance', timeliness='$judge_timeliness_rate', serious='$judge_serious_rate', integrity='$judge_integrity_rate', respect='$judge_respect_rate', administration='$judge_administration_rate' WHERE JudgeId='$judge_id';";
+        $sql_update="UPDATE LawyerTbl SET Score= '$performance', checks='$checks', AppraisalPerf='$law_performance', timeliness='$law_timeliness_rate', serious='$law_serious_rate', integrity='$law_integrity_rate', respect='$law_respect_rate', administration='$law_administration_rate' WHERE LawyerId='$law_id';";
 
         //execute the query
         mysqli_query($conn,$sql_update);
@@ -72,23 +72,23 @@
 </style>
 <body>
 <?php 
-if (isset($_SESSION['LawyerId'])) {
+if (isset($_SESSION['JudgeId'])) {
 ?>
     <div class="accountForm">
         <form  action="" method="POST">
-            <h2>Judge Performance Form</h2>
+            <h2>Lawyer Performance Form</h2>
             <div class="input-section">
             <br>
-            <input type="text" name="jname" list="judgeList">
-            <datalist id="judgeList">
-                <?php while ($row = mysqli_fetch_assoc($res_judges)): ?>
-                    <option value="<?php echo $row['JudgeId']; ?>"><?php echo $row['JudgeName']; ?></option>
+            <input type="text" name="jname" list="lawyerList" placeholder="Type Lawyer Id or name to search">
+            <datalist id="lawyerList">
+                <?php while ($row = mysqli_fetch_assoc($res_lawyers)): ?>
+                    <option value="<?php echo $row['LawyerId']; ?>"><?php echo $row['LawyerName'].'-'.$row['LawyerId']; ?></option>
                 <?php endwhile; ?>
             </datalist>
             </div>
 
             <div class="input-section">
-                <label for="timeliness">2. Does the judge deliver judgement in time ?</label>
+                <label for="timeliness">2. Does the lawyer deliver case confidently and professionally ?</label>
                 <table class="form-table">
                     <thead>
                         <tr>
@@ -224,4 +224,5 @@ if (isset($_SESSION['LawyerId'])) {
 <?php
 }
 ?>
+
    
